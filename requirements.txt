@@ -1,0 +1,7 @@
+﻿Flask
+Flask-Avatars
+Flask-Login
+Flask-SQLAlchemy
+Flask-WTF
+requests
+SQLAlchemy
