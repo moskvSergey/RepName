@@ -1,6 +1,7 @@
 from flask import Flask, render_template, url_for, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+from sqlalchemy import text
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///employers.db'
@@ -90,7 +91,6 @@ def login():
 
 @app.route('/enter', methods=['POST', 'GET'])
 def enter():
-    print("ok")
     ORM.create_tables()
     if request.method == "POST":
         key = request.form['KeyInput']
@@ -99,12 +99,26 @@ def enter():
         return render_template('enter.html')
 
 
-@app.route('/admin', methods=['GET'])
+@app.route('/admin', methods=['GET', 'POST'])
 def admin():
+    if request.method == 'POST':
+        sql_query = request.form['sql_query']
+        try:
+            result = db.session.execute(text(sql_query))
+            if result.returns_rows:
+                result_set = [dict(row) for row in result]
+                return render_template('admin.html', result_set=result_set)
+            else:
+                db.session.commit()
+                print("Запрос выполнен успешно")
+        except Exception as e:
+            print("Ошибка:", str(e))
+
     workers = ORM.select('Workers')
     vehicles = ORM.select('Vehicles')
     shifts = ORM.select('Shifts')
     return render_template('admin.html', workers=workers, vehicles=vehicles, shifts=shifts)
+
 
 
 if __name__ == '__main__':

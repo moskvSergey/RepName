@@ -59,4 +59,40 @@
         </tr>
         {% endfor %}
     </table>
+
+    <form id="sql-form" method="POST" action="/admin">
+    <textarea class="textarea" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
+    <button type="submit">Выполнить</button>
+    </form>
+
+    {% if result_set %}
+    <h2>Результаты:</h2>
+    <table>
+        <thead>
+            <tr>
+                {% for column, value in result_set[0].items() %}
+                    <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in result_set %}
+                <tr>
+                    {% for column, value in row.items() %}
+                        <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+
+<style>
+textarea {
+    height: 200px; /* Задайте желаемую высоту */
+    width: 500px; /* Задайте желаемую ширину */
+}
+</style>
 {% endblock %}
+
+
