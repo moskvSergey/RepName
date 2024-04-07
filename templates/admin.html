@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Admin{% endblock %}
+
+{% block body %}
+<h1>Admin Page</h1>
+
+    <h2>Работники</h2>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Ключ</th>
+        </tr>
+        {% for worker in workers %}
+        <tr>
+            <td>{{ worker.id }}</td>
+            <td>{{ worker.last_name }}</td>
+            <td>{{ worker.first_name }}</td>
+            <td>{{ worker.key }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Машины</h2>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Модель машины</th>
+            <th>Номер</th>
+        </tr>
+        {% for vehicle in vehicles %}
+        <tr>
+            <td>{{ vehicle.id }}</td>
+            <td>{{ vehicle.model }}</td>
+            <td>{{ vehicle.plate }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Смены</h2>
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Начало</th>
+            <th>Одометр</th>
+            <th>Бензин</th>
+            <th>ID работника</th>
+            <th>ID машины</th>
+        </tr>
+        {% for shift in shifts %}
+        <tr>
+            <td>{{ shift.id }}</td>
+            <td>{{ shift.date_started }}</td>
+            <td>{{ shift.odometer }}</td>
+            <td>{{ shift.diesel }}</td>
+            <td>{{ shift.employer_id }}</td>
+            <td>{{ shift.vehicle_id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

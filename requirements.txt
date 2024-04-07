@@ -5,3 +5,8 @@ Flask-SQLAlchemy
 Flask-WTF
 requests
 SQLAlchemy
+alembic
+asyncpg
+psycopg
+psycopg-binary
+pydantic-settings
