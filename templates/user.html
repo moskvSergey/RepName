@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Сотрудник{% endblock %}
+{% block body %}
+<h1>{{ worker.last_name }} {{ worker.first_name }}</h1>
+{% if shifts %}
+    <table class="table">
+        <tr>
+                <td>Начало</td>
+                <td>Одометр</td>
+                <td>Дизель</td>
+                <td>Машина</td>
+        </tr>
+        {% for shift in shifts %}
+            <tr>
+                <td>{{ shift.date_started }}</td>
+                <td>{{ shift.odometer }}</td>
+                <td>{{ shift.diesel }}</td>
+                <td>{{ shift.vehicle_id }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>У вас нет открытых путевых листов</p>
+    <form method="GET" action="/user/{{ worker.key }}/new_shift">
+    <button type="submit">Открыть смену</button>
+    </form>
+{% endif %}
+{% endblock %}

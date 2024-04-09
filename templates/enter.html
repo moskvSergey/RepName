@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Открыть смену{% endblock %}
+
+{% block body %}
+<form method="post" class="container form-signin w-25 m-auto">
+	<h1 class="h3 mb-3 fw-normal">Авторизация</h1>
+    <div class="form-floating">
+      <input type="text" class="form-control InputPole" id="KeyInput" name="KeyInput" placeholder="номер пропуска">
+      <label for="KeyInput">номер пропуска</label>
+	  <button class="btn btn-primary w-100 py-2" type="submit" align="center">Sign in</button>
+    </div>
+</form>
+{% endblock %}

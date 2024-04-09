@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Новая смена{% endblock %}
+{% block body %}
+<h1>{{ worker.last_name }} {{ worker.first_name }}</h1>
+<form method="POST" action="/user/{{ worker.key }}/new_shift">
+    <label for="vehicle">Выберите машину:</label>
+    <select name="vehicle" id="vehicle">
+        {% for vehicle in vehicles %}
+            <option value="{{ vehicle.id }}">{{ vehicle.plate }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="odometer">Показания одометра:</label>
+    <input type="number" id="odometer" name="odometer">
+
+    <label for="fuel">Дизель:</label>
+    <input type="number" id="fuel" name="fuel">
+
+    <input type="submit" value="Создать смену">
+</form>
+{% endblock %}
