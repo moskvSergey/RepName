@@ -34,6 +34,7 @@ class Shifts(db.Model):
     __tablename__ = "Shifts"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     date_started = db.Column(db.DateTime, default=datetime.utcnow)
+    date_ended = db.Column(db.DateTime,  nullable=True, default=None)
     odometer = db.Column(db.Integer, nullable=False)
     diesel = db.Column(db.Integer, nullable=False)
     employer_id = db.Column(db.Integer, db.ForeignKey('Workers.id'))
@@ -82,24 +83,51 @@ class ORM:
                 setattr(old, key, value)
             db.session.commit()
 
-@app.route('/')
-@app.route('/login')
-def login():
-    pass
-    #return render_template('login.html')
 
-
-@app.route('/enter', methods=['POST', 'GET'])
+@app.route('/', methods=['POST', 'GET'])
 def enter():
     ORM.create_tables()
     if request.method == "POST":
         key = request.form['KeyInput']
-        ORM.insert('Workers', {'last_name': "Moskvin", 'first_name':"Sergey", 'key':"admin"})
+        return redirect(url_for('worker_shifts', key=key))
     else:
         return render_template('enter.html')
 
+@app.route('/user/<key>', methods=['POST', 'GET'])
+def worker_shifts(key):
+    if request.method == 'POST':
+        return redirect(url_for('new_shift', key=key))
+    else:
+        worker = Workers.query.filter_by(key=key).first()
+        if worker is None:
+            return "Пользователь не найден"
+        else:
+            shifts = Shifts.query.filter_by(employer_id=worker.id, date_ended=None).all()
+            return render_template('user.html', worker=worker, shifts=shifts)
 
-@app.route('/admin', methods=['GET', 'POST'])
+
+@app.route('/user/<key>/new_shift', methods=['POST', 'GET'])
+def new_shift(key):
+    if request.method == 'POST':
+        vehicle_id = request.form['vehicle']
+        odometer = request.form['odometer']
+        fuel = request.form['fuel']
+        worker = Workers.query.filter_by(key=key).first()
+
+        new_shift = Shifts(vehicle_id=vehicle_id, odometer=odometer, diesel=fuel, employer_id=worker.id)
+        db.session.add(new_shift)
+        db.session.commit()
+
+        return redirect(url_for('worker_shifts', key=key))
+    else:
+        vehicles = Vehicles.query.all()
+        worker = Workers.query.filter_by(key=key).first()
+        print(worker)
+        return render_template('new_shift.html', vehicles=vehicles, worker=worker)
+
+
+
+@app.route('/user/admin', methods=['GET', 'POST'])
 def admin():
     if request.method == 'POST':
         sql_query = request.form['sql_query']
@@ -118,8 +146,6 @@ def admin():
     vehicles = ORM.select('Vehicles')
     shifts = ORM.select('Shifts')
     return render_template('admin.html', workers=workers, vehicles=vehicles, shifts=shifts)
-
-
 
 if __name__ == '__main__':
     app.run()

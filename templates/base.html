@@ -72,6 +72,7 @@
 			<button class="keyboard-button">B</button>
 			<button class="keyboard-button">N</button>
 			<button class="keyboard-button">M</button>
+			<button id="space">␣</button>
 			<button id="delete">⌫</button>
 			<button id="hide">⊽</button>
 		</div>
@@ -86,6 +87,10 @@
 
 	document.getElementById('delete').addEventListener('click', function() {
             focusInput.value = focusInput.value.slice(0, -1);
+        });
+
+    document.getElementById('space').addEventListener('click', function() {
+            focusInput.value += " ";
         });
 		
 	document.getElementById('hide').addEventListener('click', function() {

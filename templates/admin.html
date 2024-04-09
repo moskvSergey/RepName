@@ -43,6 +43,7 @@
         <tr>
             <th>ID</th>
             <th>Начало</th>
+            <th>Конец</th>
             <th>Одометр</th>
             <th>Бензин</th>
             <th>ID работника</th>
@@ -52,6 +53,7 @@
         <tr>
             <td>{{ shift.id }}</td>
             <td>{{ shift.date_started }}</td>
+            <td>{{ shift.date_ended }}</td>
             <td>{{ shift.odometer }}</td>
             <td>{{ shift.diesel }}</td>
             <td>{{ shift.employer_id }}</td>
@@ -60,8 +62,8 @@
         {% endfor %}
     </table>
 
-    <form id="sql-form" method="POST" action="/admin">
-    <textarea class="textarea" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
+    <form id="sql-form" method="POST" action="/user/admin">
+    <textarea class="textarea InputPole" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
     <button type="submit">Выполнить</button>
     </form>
 
