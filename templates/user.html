@@ -2,21 +2,30 @@
 
 {% block title %}Сотрудник{% endblock %}
 {% block body %}
-<h1>{{ worker.last_name }} {{ worker.first_name }}</h1>
+<h1>{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
 {% if shifts %}
     <table class="table">
         <tr>
+                <td>Смена</td>
                 <td>Начало</td>
+                <td>Конец</td>
                 <td>Одометр</td>
                 <td>Дизель</td>
                 <td>Машина</td>
         </tr>
         {% for shift in shifts %}
             <tr>
+                <td>{{ shift.type }}</td>
                 <td>{{ shift.date_started }}</td>
+                <td>{{ shift.date_ended }}</td>
                 <td>{{ shift.odometer }}</td>
                 <td>{{ shift.diesel }}</td>
                 <td>{{ shift.vehicle_id }}</td>
+                <td>
+                    <form method="POST" action="/download/{{ shift.id }}">
+                        <button type="submit">do</button>
+                    </form>
+                </td>
             </tr>
         {% endfor %}
     </table>

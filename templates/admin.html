@@ -10,6 +10,11 @@
             <th>ID</th>
             <th>Фамилия</th>
             <th>Имя</th>
+            <th>Отчество</th>
+            <th>Табельный номер</th>
+            <th>Снилс</th>
+            <th>Номер удостоверения</th>
+            <th>Дата удостоверения</th>
             <th>Ключ</th>
         </tr>
         {% for worker in workers %}
@@ -17,6 +22,11 @@
             <td>{{ worker.id }}</td>
             <td>{{ worker.last_name }}</td>
             <td>{{ worker.first_name }}</td>
+            <td>{{ worker.surname }}</td>
+            <td>{{ worker.tabel }}</td>
+            <td>{{ worker.snils }}</td>
+            <td>{{ worker.license_number }}</td>
+            <td>{{ worker.license_date }}</td>
             <td>{{ worker.key }}</td>
         </tr>
         {% endfor %}
@@ -42,6 +52,7 @@
     <table class="table">
         <tr>
             <th>ID</th>
+            <th>Тип</th>
             <th>Начало</th>
             <th>Конец</th>
             <th>Одометр</th>
@@ -52,6 +63,7 @@
         {% for shift in shifts %}
         <tr>
             <td>{{ shift.id }}</td>
+            <td>{{ shift.type }}</td>
             <td>{{ shift.date_started }}</td>
             <td>{{ shift.date_ended }}</td>
             <td>{{ shift.odometer }}</td>
@@ -61,6 +73,11 @@
         </tr>
         {% endfor %}
     </table>
+
+    <form method="GET" action="/user/admin/upload">
+    <button type="submit">Загрузить данные</button>
+    </form>
+
 
     <form id="sql-form" method="POST" action="/user/admin">
     <textarea class="textarea InputPole" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
