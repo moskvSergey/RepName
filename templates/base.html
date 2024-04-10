@@ -2,118 +2,117 @@
 <html lang="ru">
 <head>
 	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, user-scable=no, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<title>{% block title %}{% endblock %}</title>
 </head>
-<body>
-<main class="container form-signin w-100 m-auto">
+<body class="d-flex w-100 h-100 text-center bg-body-tertiary">
+<div class="cover-container d-flex w-50 h-100 p-3 mx-auto flex-column">
 	{% block body %}
-		
+
 	{% endblock %}
-	<style>
-        .keyboard {
-            display: none;
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            background: #ccc;
-        }
-        .keyboard-button {
-            width: 40px;
-            height: 50px;
-            margin: 1px;
-            font-size: 20px;
-        }
-    </style>
-	<div id="keyboard" class="container form-signin w-50 m-auto">
+
+	<div id="keyboard" >
 		<div>
-			<button class="keyboard-button">1</button>
-			<button class="keyboard-button">2</button>
-			<button class="keyboard-button">3</button>
-			<button class="keyboard-button">4</button>
-			<button class="keyboard-button">5</button>
-			<button class="keyboard-button">6</button>
-			<button class="keyboard-button">7</button>
-			<button class="keyboard-button">8</button>
-			<button class="keyboard-button">9</button>
-			<button class="keyboard-button">0</button>
+			<button class="w-10 btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">1</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">2</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">3</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">4</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">5</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">6</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">7</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">8</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">9</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">0</button>
 		</div>
 		<div>
-			<button class="keyboard-button">Q</button>
-			<button class="keyboard-button">W</button>
-			<button class="keyboard-button">E</button>
-			<button class="keyboard-button">R</button>
-			<button class="keyboard-button">T</button>
-			<button class="keyboard-button">Y</button>
-			<button class="keyboard-button">U</button>
-			<button class="keyboard-button">I</button>
-			<button class="keyboard-button">O</button>
-			<button class="keyboard-button">P</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">Q</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">W</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">E</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">R</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">T</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">Y</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">U</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">I</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">O</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">P</button>
 		</div>
 		<div>
-			<button class="keyboard-button">A</button>
-			<button class="keyboard-button">S</button>
-			<button class="keyboard-button">D</button>
-			<button class="keyboard-button">F</button>
-			<button class="keyboard-button">G</button>
-			<button class="keyboard-button">H</button>
-			<button class="keyboard-button">J</button>
-			<button class="keyboard-button">K</button>
-			<button class="keyboard-button">L</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">A</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">S</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">D</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">F</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">G</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">H</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">J</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">K</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">L</button>
 		</div>
 		<div>
-			<button class="keyboard-button">Z</button>
-			<button class="keyboard-button">X</button>
-			<button class="keyboard-button">C</button>
-			<button class="keyboard-button">V</button>
-			<button class="keyboard-button">B</button>
-			<button class="keyboard-button">N</button>
-			<button class="keyboard-button">M</button>
-			<button id="space">␣</button>
-			<button id="delete">⌫</button>
-			<button id="hide">⊽</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">Z</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">X</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">C</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">V</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">B</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">N</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white keyboard-button">M</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white" id="space">␣</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white" id="delete">⌫</button>
+			<button class="btn btn-lg btn-light fw-bold border-white bg-white" id="hide">⊽</button>
 		</div>
 	</div>
-</main>
+</div>
+
+</body>
+
 <script>
 	var keyboard = document.getElementById('keyboard');
-    var buttons = keyboard.getElementsByClassName('keyboard-button');
+	var buttons = keyboard.getElementsByClassName('keyboard-button');
 	var inputFields = document.getElementsByClassName('InputPole');
 	var focusInput;
 	keyboard.style.display = 'none';
+	console.log(keyboard);
 
 	document.getElementById('delete').addEventListener('click', function() {
-            focusInput.value = focusInput.value.slice(0, -1);
-        });
+		if (focusInput) {
+			focusInput.value = focusInput.value.slice(0, -1);
+		}
+	});
 
-    document.getElementById('space').addEventListener('click', function() {
-            focusInput.value += " ";
-        });
-		
+	document.getElementById('space').addEventListener('click', function() {
+		if (focusInput) {
+			focusInput.value += " ";
+		}
+	});
+
 	document.getElementById('hide').addEventListener('click', function() {
-            keyboard.style.display = 'none';
-        });
-		
-	 for (var i = 0; i < inputFields.length; i++) {
-        inputFields[i].addEventListener('focus', function() {
-			keyboard.style.display = 'block';
-			focusInput = this
-        });
-    }
+		keyboard.style.display = 'none';
+	});
 
-    for (var i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener('click', function() {
-            focusInput.value += this.textContent;
-			
-        });
-    }
+	for (var i = 0; i < inputFields.length; i++) {
+		inputFields[i].addEventListener('focus', function() {
+			keyboard.style.display = 'block';
+			focusInput = this;
+		});
+	}
+
+	for (var i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener('click', function() {
+			if (focusInput) {
+				focusInput.value += this.textContent;
+			}
+		});
+	}
 
     {% block script %}
 
     {% endblock %}
 </script>
-</body>
+<style>
+	{% block style %}
+
+	{% endblock %}
+</style>
 </html>

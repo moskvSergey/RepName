@@ -57,10 +57,11 @@ def new_shift(key):
 def admin():
     if request.method == 'POST':
         sql_query = request.form['sql_query']
+        print(sql_query)
         try:
             result = db.session.execute(text(sql_query))
             if result.returns_rows:
-                result_set = [dict(row) for row in result]
+                result_set = [{column: value for column, value in zip(result.keys(), row)} for row in result]
                 return render_template('admin.html', result_set=result_set)
             else:
                 db.session.commit()

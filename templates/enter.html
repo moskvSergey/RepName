@@ -3,12 +3,18 @@
 {% block title %}Открыть смену{% endblock %}
 
 {% block body %}
-<form method="post" class="container form-signin w-25 m-auto">
-	<h1 class="h3 mb-3 fw-normal">Авторизация</h1>
-    <div class="form-floating">
-      <input type="text" class="form-control InputPole" id="KeyInput" name="KeyInput" placeholder="номер пропуска">
-      <label for="KeyInput">номер пропуска</label>
-	  <button class="btn btn-primary w-100 py-2" type="submit" align="center">Sign in</button>
-    </div>
-</form>
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
+    <form method="POST">
+        <div class="mb-3">
+            <h1 class="display-4">Авторизация</h1>
+        </div>
+        <div class="mb-3">
+        <label for="KeyInput">номер пропуска</label>
+        <input type="text" class="InputPole form-control" id="KeyInput" name="KeyInput" placeholder="номер пропуска">
+        </div>
+        <div class="mb-3">
+            <button class="btn btn-primary w-50 py-2" type="submit">Sign in</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

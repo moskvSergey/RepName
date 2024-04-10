@@ -2,37 +2,45 @@
 
 {% block title %}Сотрудник{% endblock %}
 {% block body %}
-<h1>{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
-{% if shifts %}
-    <table class="table">
-        <tr>
-                <td>Смена</td>
-                <td>Начало</td>
-                <td>Конец</td>
-                <td>Одометр</td>
-                <td>Дизель</td>
-                <td>Машина</td>
-        </tr>
-        {% for shift in shifts %}
-            <tr>
-                <td>{{ shift.type }}</td>
-                <td>{{ shift.date_started }}</td>
-                <td>{{ shift.date_ended }}</td>
-                <td>{{ shift.odometer }}</td>
-                <td>{{ shift.diesel }}</td>
-                <td>{{ shift.vehicle_id }}</td>
-                <td>
-                    <form method="POST" action="/download/{{ shift.id }}">
-                        <button type="submit">do</button>
-                    </form>
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
-{% else %}
-    <p>У вас нет открытых путевых листов</p>
-    <form method="GET" action="/user/{{ worker.key }}/new_shift">
-    <button type="submit">Открыть смену</button>
-    </form>
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
+    <h1 class="display-4">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
+    {% if shifts %}
+        <div class="mb-3">
+            <table class="table table-Secondary table-striped">
+                <tr class="table table-Secondary table-striped">
+                        <td class="table table-Secondary table-striped">Смена</td>
+                        <td class="table table-Secondary table-striped">Начало</td>
+                        <td class="table table-Secondary table-striped">Конец</td>
+                        <td class="table table-Secondary table-striped">Одометр</td>
+                        <td class="table table-Secondary table-striped">Дизель</td>
+                        <td class="table table-Secondary table-striped">Машина</td>
+                </tr>
+                {% for shift in shifts %}
+                    <tr class="table table-Secondary table-striped">
+                        <td class="table table-Secondary table-striped">{{ shift.type }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.date_started }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.date_ended }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.odometer }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.diesel }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.vehicle_id }}</td>
+                        <td class="table table-Secondary table-striped">
+                            <form method="POST" action="/download/{{ shift.id }}">
+                                <button class="btn btn-primary w-100 py-2" type="submit">do</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    {% else %}
+        <div class="mb-3">
+            <p>У вас нет открытых путевых листов</p>
+        </div>
+        <div class="mb-3">
+            <form method="GET" action="/user/{{ worker.key }}/new_shift">
+                <button class="btn btn-primary w-50 py-2" type="submit">Открыть смену</button>
+            </form>
+        </div>
 {% endif %}
+</div>
 {% endblock %}

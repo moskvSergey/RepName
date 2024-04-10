@@ -2,116 +2,122 @@
 {% block title %}Admin{% endblock %}
 
 {% block body %}
-<h1>Admin Page</h1>
-
-    <h2>Работники</h2>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-            <th>Отчество</th>
-            <th>Табельный номер</th>
-            <th>Снилс</th>
-            <th>Номер удостоверения</th>
-            <th>Дата удостоверения</th>
-            <th>Ключ</th>
-        </tr>
-        {% for worker in workers %}
-        <tr>
-            <td>{{ worker.id }}</td>
-            <td>{{ worker.last_name }}</td>
-            <td>{{ worker.first_name }}</td>
-            <td>{{ worker.surname }}</td>
-            <td>{{ worker.tabel }}</td>
-            <td>{{ worker.snils }}</td>
-            <td>{{ worker.license_number }}</td>
-            <td>{{ worker.license_date }}</td>
-            <td>{{ worker.key }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Машины</h2>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Модель машины</th>
-            <th>Номер</th>
-        </tr>
-        {% for vehicle in vehicles %}
-        <tr>
-            <td>{{ vehicle.id }}</td>
-            <td>{{ vehicle.model }}</td>
-            <td>{{ vehicle.plate }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Смены</h2>
-    <table class="table">
-        <tr>
-            <th>ID</th>
-            <th>Тип</th>
-            <th>Начало</th>
-            <th>Конец</th>
-            <th>Одометр</th>
-            <th>Бензин</th>
-            <th>ID работника</th>
-            <th>ID машины</th>
-        </tr>
-        {% for shift in shifts %}
-        <tr>
-            <td>{{ shift.id }}</td>
-            <td>{{ shift.type }}</td>
-            <td>{{ shift.date_started }}</td>
-            <td>{{ shift.date_ended }}</td>
-            <td>{{ shift.odometer }}</td>
-            <td>{{ shift.diesel }}</td>
-            <td>{{ shift.employer_id }}</td>
-            <td>{{ shift.vehicle_id }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-
-    <form method="GET" action="/user/admin/upload">
-    <button type="submit">Загрузить данные</button>
-    </form>
-
-
-    <form id="sql-form" method="POST" action="/user/admin">
-    <textarea class="textarea InputPole" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
-    <button type="submit">Выполнить</button>
-    </form>
-
-    {% if result_set %}
-    <h2>Результаты:</h2>
-    <table>
-        <thead>
-            <tr>
-                {% for column, value in result_set[0].items() %}
-                    <th>{{ column }}</th>
-                {% endfor %}
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
+    <h1 class="display-4">Admin Page</h1>
+    <div class="mb-3">
+        <h2 class="display-5">Работники</h2>
+    </div>
+    <div class="mb-3">
+        <table class="table table-Secondary table-striped">
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">ID</td>
+                <td class="table table-Secondary table-striped">Фамилия</td>
+                <td class="table table-Secondary table-striped">Имя</td>
+                <td class="table table-Secondary table-striped">Отчество</td>
+                <td class="table table-Secondary table-striped">Табельный номер</td>
+                <td class="table table-Secondary table-striped">Снилс</td>
+                <td class="table table-Secondary table-striped">Номер удостоверения</td>
+                <td class="table table-Secondary table-striped">Дата удостоверения</td>
+                <td class="table table-Secondary table-striped">Ключ</td>
             </tr>
-        </thead>
-        <tbody>
-            {% for row in result_set %}
-                <tr>
-                    {% for column, value in row.items() %}
-                        <td>{{ value }}</td>
+            {% for worker in workers %}
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">{{ worker.id }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.last_name }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.first_name }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.surname }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.tabel }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.snils }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.license_number }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.license_date }}</td>
+                <td class="table table-Secondary table-striped">{{ worker.key }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="mb-3">
+        <h2 class="display-4">Машины</h2>
+    </div>
+    <div class="mb-3">
+        <table class="table table-Secondary table-striped">
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">ID</td>
+                <td class="table table-Secondary table-striped">Модель машины</td>
+                <td class="table table-Secondary table-striped">Номер</td>
+            </tr>
+            {% for vehicle in vehicles %}
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">{{ vehicle.id }}</td>
+                <td class="table table-Secondary table-striped">{{ vehicle.model }}</td>
+                <td class="table table-Secondary table-striped">{{ vehicle.plate }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="mb-3">
+        <h2 class="display-5">Смены</h2>
+    </div>
+    <div class="mb-3">
+        <table class="table table-Secondary table-striped">
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">ID</td>
+                <td class="table table-Secondary table-striped">Тип</td>
+                <td class="table table-Secondary table-striped">Начало</td>
+                <td class="table table-Secondary table-striped">Конец</td>
+                <td class="table table-Secondary table-striped">Одометр</td>
+                <td class="table table-Secondary table-striped">Бензин</td>
+                <td class="table table-Secondary table-striped">ID работника</td>
+                <td class="table table-Secondary table-striped">ID машины</td>
+            </tr>
+            {% for shift in shifts %}
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">{{ shift.id }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.type }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.date_started }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.date_ended }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.odometer }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.diesel }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.employer_id }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.vehicle_id }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="mb-3">
+        <form method="GET" action="/user/admin/upload">
+            <button class="btn btn-primary w-50 py-2" type="submit">Загрузить данные</button>
+        </form>
+    </div>
+    <div class="form-floating">
+        <form id="sql-form" method="POST" action="/user/admin">
+            <textarea class="form-control InputPole" name="sql_query" placeholder="Введите ваш SQL-запрос здесь"></textarea>
+            <button class="btn btn-primary w-50 py-2" type="submit">Выполнить</button>
+        </form>
+    </div>
+    <div class="mb-3">
+        {% if result_set %}
+        <h2 class="display-5">Результаты:</h2>
+        <table class="table table-Secondary table-striped">
+            <thead class="table table-Secondary table-striped">
+                <tr class="table table-Secondary table-striped">
+                    {% for column, value in result_set[0].items() %}
+                        <th class="table table-Secondary table-striped">{{ column }}</th>
                     {% endfor %}
                 </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% endif %}
-
-<style>
-textarea {
-    height: 200px; /* Задайте желаемую высоту */
-    width: 500px; /* Задайте желаемую ширину */
-}
-</style>
+            </thead>
+            <tbody class="table table-Secondary table-striped">
+                {% for row in result_set %}
+                    <tr class="table table-Secondary table-striped">
+                        {% for column, value in row.items() %}
+                            <td class="table table-Secondary table-striped">{{ value }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
 
 

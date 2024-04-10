@@ -2,26 +2,33 @@
 
 {% block title %}Новая смена{% endblock %}
 {% block body %}
-<h1>{{ worker.last_name }} {{ worker.first_name }}</h1>
+<h1 class="display-5">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
 <form method="POST" action="/user/{{ worker.key }}/new_shift">
-    <label for="vehicle">Выберите машину:</label>
-    <select name="vehicle" id="vehicle">
-        {% for vehicle in vehicles %}
-            <option value="{{ vehicle.id }}">{{ vehicle.plate }}</option>
-        {% endfor %}
-    </select>
-
-    <select name="type" id="type">
-        <option value="1 смена">1 смена</option>
-        <option value="2 смена">2 смена</option>
-    </select>
-
-    <label for="odometer">Показания одометра:</label>
-    <input type="number" id="odometer" name="odometer">
-
-    <label for="fuel">Дизель:</label>
-    <input type="number" id="fuel" name="fuel">
-
-    <input type="submit" value="Создать смену">
+    <div class="mb-3">
+        <label for="vehicle">Выберите машину:</label>
+        <select name="vehicle" id="vehicle" class="form-select form-select-lg mb-3">
+            {% for vehicle in vehicles %}
+                <option value="{{ vehicle.id }}">{{ vehicle.plate }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="vehicle">Выберите cмену</label>
+        <select class="form-select form-select-lg mb-3" name="type" id="type">
+            <option value="1 смена">1 смена</option>
+            <option value="2 смена">2 смена</option>
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="odometer">Показания одометра:</label>
+        <input type="text" class="form-control InputPole" id="odometer" name="odometer">
+    </div>
+    <div class="mb-3">
+        <label for="fuel">Дизель:</label>
+        <input type="text" class="form-control InputPole" id="fuel" name="fuel">
+    </div>
+    <div class="mb-3">
+        <input class="btn btn-primary w-100 py-2" type="submit" value="Создать смену">
+    </div>
 </form>
 {% endblock %}
