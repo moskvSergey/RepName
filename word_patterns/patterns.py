@@ -38,8 +38,8 @@ def convert_bd(shift, driver, car):
         'm':formattet_m,
         'ds':formattet_ds,
         'hs': formattet_hs,
-        'odometer': shift.odometer,
-        'diesel': shift.diesel,
+        'odometer': shift.odometer_start,
+        'diesel': shift.diesel_start,
         'fio': fio
     }
     return shift

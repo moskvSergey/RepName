@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Закрыть путевой лист{% endblock %}
+{% block body %}
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
+    <h1 class="display-5">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
+    <div class="mb-3">
+        <table class="table table-Secondary table-striped">
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">Смена</td>
+                <td class="table table-Secondary table-striped">Начало</td>
+                <td class="table table-Secondary table-striped">Одометр</td>
+                <td class="table table-Secondary table-striped">Дизель</td>
+                <td class="table table-Secondary table-striped">Машина</td>
+            </tr>
+            <tr class="table table-Secondary table-striped">
+                <td class="table table-Secondary table-striped">{{ shift.type }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.date_started }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.odometer_start }}</td>
+                <td class="table table-Secondary table-striped">{{ shift.diesel_start }}</td>
+                <td class="table table-Secondary table-striped">{{ car.plate }}</td>
+            </tr>
+        </table>
+    </div>
+    <div class="mb-3">
+        <form method="POST" action="/close/{{ shift.id }}" id="closeForm">
+            <div class="mb-3">
+                <label for="odometer">Показания одометра:</label>
+                <input type="text" class="form-control InputPole" id="odometer" name="odometer">
+            </div>
+            <div class="mb-3">
+                <label for="fuel">Дизель:</label>
+                <input type="text" class="form-control InputPole" id="fuel" name="fuel">
+            </div>
+            <div class="mb-3">
+                <label for="refill">Заправлено</label>
+                <input type="text" class="form-control InputPole" id="refill" name="refill">
+            </div>
+            <div class="mb-3">
+                <input class="btn btn-primary w-100 py-2" type="submit" value="Закрыть лист">
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block script %}
+
+document.getElementById('closeForm').addEventListener('submit', function(event) {
+  event.preventDefault();
+    showSuccessMessage();
+  setTimeout(function() {
+    document.getElementById('closeForm').submit();
+  }, 2000);
+});
+{% endblock %}

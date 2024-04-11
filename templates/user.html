@@ -4,32 +4,33 @@
 {% block body %}
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
     <h1 class="display-4">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
-    {% if shifts %}
+    {% if shift %}
         <div class="mb-3">
             <table class="table table-Secondary table-striped">
                 <tr class="table table-Secondary table-striped">
                         <td class="table table-Secondary table-striped">Смена</td>
                         <td class="table table-Secondary table-striped">Начало</td>
-                        <td class="table table-Secondary table-striped">Конец</td>
                         <td class="table table-Secondary table-striped">Одометр</td>
                         <td class="table table-Secondary table-striped">Дизель</td>
                         <td class="table table-Secondary table-striped">Машина</td>
                 </tr>
-                {% for shift in shifts %}
                     <tr class="table table-Secondary table-striped">
                         <td class="table table-Secondary table-striped">{{ shift.type }}</td>
                         <td class="table table-Secondary table-striped">{{ shift.date_started }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.date_ended }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.odometer }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.diesel }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.vehicle_id }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.odometer_start }}</td>
+                        <td class="table table-Secondary table-striped">{{ shift.diesel_start }}</td>
+                        <td class="table table-Secondary table-striped">{{ car.plate }}</td>
                         <td class="table table-Secondary table-striped">
-                            <form method="POST" action="/download/{{ shift.id }}">
-                                <button class="btn btn-primary w-100 py-2" type="submit">do</button>
+                            <form method="POST" action="/download/{{ shift.id }}" id="downloadForm">
+                                <button class="btn btn-primary w-100 py-2" type="submit">↓</button>
+                            </form>
+                        </td>
+                        <td class="table table-Secondary table-striped">
+                            <form method="GET" action="/close/{{ shift.id }}">
+                                <button class="btn btn-primary w-100 py-2" type="submit">❌</button>
                             </form>
                         </td>
                     </tr>
-                {% endfor %}
             </table>
         </div>
     {% else %}
@@ -43,4 +44,15 @@
         </div>
 {% endif %}
 </div>
+{% endblock %}
+
+{% block script %}
+
+document.getElementById('downloadForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    showSuccessMessage();
+    setTimeout(function() {
+        document.getElementById('downloadForm').submit();
+    }, 2000);
+});
 {% endblock %}

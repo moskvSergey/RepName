@@ -25,10 +25,14 @@ def worker_shifts(key):
     else:
         worker = Workers.query.filter_by(key=key).first()
         if worker is None:
-            return "Пользователь не найден"
+            return render_template('base.html')
         else:
-            shifts = Shifts.query.filter(Shifts.employer_id == worker.id, Shifts.date_ended > datetime.now()).all()
-            return render_template('user.html', worker=worker, shifts=shifts)
+            shift = Shifts.query.filter(Shifts.employer_id == worker.id, Shifts.date_ended == None).first()
+            if shift:
+                car = Vehicles.query.filter(Vehicles.id == shift.vehicle_id).first()
+            else:
+                car = None
+            return render_template('user.html', worker=worker, shift=shift, car=car)
 
 
 @app.route('/user/<key>/new_shift', methods=['POST', 'GET'])
@@ -40,7 +44,7 @@ def new_shift(key):
         fuel = request.form['fuel']
         worker = Workers.query.filter_by(key=key).first()
 
-        new_shift = Shifts(vehicle_id=vehicle_id, type=type, odometer=odometer, diesel=fuel, employer_id=worker.id)
+        new_shift = Shifts(vehicle_id=vehicle_id, type=type, odometer_start=odometer, diesel_start=fuel, employer_id=worker.id)
         db.session.add(new_shift)
         db.session.commit()
 
@@ -48,13 +52,34 @@ def new_shift(key):
     else:
         vehicles = Vehicles.query.all()
         worker = Workers.query.filter_by(key=key).first()
-        print(worker)
         return render_template('new_shift.html', vehicles=vehicles, worker=worker)
 
+@app.route('/close/<int:id>', methods=['POST', 'GET'])
+def close_shift(id):
 
+    shift = Shifts.query.get(id)
+    worker = Workers.query.get(shift.employer_id)
+    car = Vehicles.query.get(shift.vehicle_id)
 
-@app.route('/user/admin', methods=['GET', 'POST'])
+    if request.method == "POST":
+        try:
+            shift.odometer_end = request.form['odometer']
+            shift.diesel_end = request.form['fuel']
+            shift.refill = request.form['refill']
+            shift.date_ended = datetime.now()
+            db.session.commit()
+        except Exception as e:
+            print("Ошибка:", str(e))
+
+        return redirect(url_for("enter"))
+    else:
+        return render_template('close_shift.html', shift=shift, worker=worker, car=car)
+
+@app.route('/user/404', methods=['GET', 'POST'])
 def admin():
+    workers = ORM.select('Workers')
+    vehicles = ORM.select('Vehicles')
+    shifts = ORM.select('Shifts')
     if request.method == 'POST':
         sql_query = request.form['sql_query']
         print(sql_query)
@@ -62,19 +87,21 @@ def admin():
             result = db.session.execute(text(sql_query))
             if result.returns_rows:
                 result_set = [{column: value for column, value in zip(result.keys(), row)} for row in result]
-                return render_template('admin.html', result_set=result_set)
+                return render_template('admin.html', result_set=result_set, workers=workers, vehicles=vehicles, shifts=shifts)
             else:
                 db.session.commit()
                 print("Запрос выполнен успешно")
+
+                workers = ORM.select('Workers')
+                vehicles = ORM.select('Vehicles')
+                shifts = ORM.select('Shifts')
+
         except Exception as e:
             print("Ошибка:", str(e))
 
-    workers = ORM.select('Workers')
-    vehicles = ORM.select('Vehicles')
-    shifts = ORM.select('Shifts')
     return render_template('admin.html', workers=workers, vehicles=vehicles, shifts=shifts)
 
-@app.route('/user/admin/upload', methods=['GET', 'POST'])
+@app.route('/user/404/upload', methods=['GET', 'POST'])
 def read_excel():
     if request.method == 'POST':
         file = request.files['file']
@@ -132,3 +159,4 @@ def download(id):
     worker = Workers.query.get(shift.employer_id)
     car = Vehicles.query.get(shift.vehicle_id)
     download_pl(shift,worker, car)
+    return redirect(url_for("enter"))
