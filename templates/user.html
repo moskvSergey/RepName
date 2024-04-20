@@ -48,11 +48,4 @@
 
 {% block script %}
 
-document.getElementById('downloadForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-    showSuccessMessage();
-    setTimeout(function() {
-        document.getElementById('downloadForm').submit();
-    }, 2000);
-});
 {% endblock %}

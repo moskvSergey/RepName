@@ -1,14 +1,27 @@
-from datetime import datetime
 import locale
 from docxtpl import DocxTemplate
+import win32api
+import win32print
+
 
 locale.setlocale(locale.LC_TIME, 'Russian_Russia.1251')
+
+
+def print_document(save_path):
+    all_printers = [printer[2] for printer in win32print.EnumPrinters(2)]
+    try:
+        printer_name = all_printers[0]
+        win32api.ShellExecute(0, "printto", save_path, f'"{printer_name}"', ".", 0)
+    except:
+        return "Нет доступных принтеров"
+
 def create_waybill(data):
     template = DocxTemplate("word_patterns/PL-1.docx")
     context = data
     template.render(context)
     save_path = f'путевые листы/{data["ds"]} {data["fio"]}.docx'
     template.save(save_path)
+    return print_document(save_path)
 
 def convert_bd(shift, driver, car):
     date_started = shift.date_started
@@ -46,4 +59,4 @@ def convert_bd(shift, driver, car):
 
 def download_pl(shift, driver, car):
     shift = convert_bd(shift, driver, car)
-    create_waybill(shift)
+    return create_waybill(shift)

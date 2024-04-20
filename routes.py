@@ -25,7 +25,7 @@ def worker_shifts(key):
     else:
         worker = Workers.query.filter_by(key=key).first()
         if worker is None:
-            return render_template('base.html')
+            return render_template('error.html', Text="Такого пользователя нет.")
         else:
             shift = Shifts.query.filter(Shifts.employer_id == worker.id, Shifts.date_ended == None).first()
             if shift:
@@ -158,5 +158,6 @@ def download(id):
     shift = Shifts.query.get(id)
     worker = Workers.query.get(shift.employer_id)
     car = Vehicles.query.get(shift.vehicle_id)
-    download_pl(shift,worker, car)
+    if download_pl(shift,worker, car):
+        return render_template("error.html", Text="Нет доступных принтеров")
     return redirect(url_for("enter"))
