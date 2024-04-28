@@ -5,4 +5,3 @@ requests
 docxtpl
 pandas
 openpyxl
-pip install pywin32

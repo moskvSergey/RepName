@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, send_file
 from sqlalchemy import text
 from __init__ import app, db
 from models import Workers, Vehicles, Shifts
@@ -38,15 +38,20 @@ def worker_shifts(key):
 @app.route('/user/<key>/new_shift', methods=['POST', 'GET'])
 def new_shift(key):
     if request.method == 'POST':
-        vehicle_id = request.form['vehicle']
-        type = request.form['type']
-        odometer = request.form['odometer']
-        fuel = request.form['fuel']
-        worker = Workers.query.filter_by(key=key).first()
+        try:
+            vehicle_id = request.form['vehicle']
+            type = request.form['type']
+            int(request.form['odometer'])
+            int(request.form['fuel'])
+            odometer = request.form['odometer']
+            fuel = request.form['fuel']
+            worker = Workers.query.filter_by(key=key).first()
 
-        new_shift = Shifts(vehicle_id=vehicle_id, type=type, odometer_start=odometer, diesel_start=fuel, employer_id=worker.id)
-        db.session.add(new_shift)
-        db.session.commit()
+            new_shift = Shifts(vehicle_id=vehicle_id, type=type, odometer_start=odometer, diesel_start=fuel, employer_id=worker.id)
+            db.session.add(new_shift)
+            db.session.commit()
+        except:
+            return render_template('error.html', Text="Некорректные данные")
 
         return redirect(url_for('worker_shifts', key=key))
     else:
@@ -63,6 +68,9 @@ def close_shift(id):
 
     if request.method == "POST":
         try:
+            int(request.form['odometer'])
+            int(request.form['fuel'])
+            int(request.form['refill'])
             shift.odometer_end = request.form['odometer']
             shift.diesel_end = request.form['fuel']
             shift.refill = request.form['refill']
@@ -71,7 +79,7 @@ def close_shift(id):
         except Exception as e:
             print("Ошибка:", str(e))
 
-        return redirect(url_for("enter"))
+        return render_template('error.html', Text="Некорректные данные")
     else:
         return render_template('close_shift.html', shift=shift, worker=worker, car=car)
 
@@ -158,6 +166,8 @@ def download(id):
     shift = Shifts.query.get(id)
     worker = Workers.query.get(shift.employer_id)
     car = Vehicles.query.get(shift.vehicle_id)
-    if download_pl(shift,worker, car):
-        return render_template("error.html", Text="Нет доступных принтеров")
-    return redirect(url_for("enter"))
+    try:
+        answer = download_pl(shift,worker, car)[7:]
+        return send_file(answer, as_attachment=True)
+    except Exception as e:
+        return render_template("error.html", Text=str(e))

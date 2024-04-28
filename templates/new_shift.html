@@ -2,33 +2,41 @@
 
 {% block title %}Новая смена{% endblock %}
 {% block body %}
-<h1 class="display-5">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
-<form method="POST" action="/user/{{ worker.key }}/new_shift">
-    <div class="mb-3">
-        <label for="vehicle">Выберите машину:</label>
-        <select name="vehicle" id="vehicle" class="form-select form-select-lg mb-3">
-            {% for vehicle in vehicles %}
-                <option value="{{ vehicle.id }}">{{ vehicle.plate }}</option>
-            {% endfor %}
-        </select>
+<div class="container h-50 w-75">
+    <div class="row justify-content-center">
+        <div class="col-12 text-center py-1">
+            <h1 class="display-5">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
+        </div>
     </div>
-    <div class="mb-3">
-        <label for="vehicle">Выберите cмену</label>
-        <select class="form-select form-select-lg mb-3" name="type" id="type">
-            <option value="1 смена">1 смена</option>
-            <option value="2 смена">2 смена</option>
-        </select>
-    </div>
-    <div class="mb-3">
-        <label for="odometer">Показания одометра:</label>
-        <input type="text" class="form-control InputPole" id="odometer" name="odometer">
-    </div>
-    <div class="mb-3">
-        <label for="fuel">Дизель:</label>
-        <input type="text" class="form-control InputPole" id="fuel" name="fuel">
-    </div>
-    <div class="mb-3">
-        <input class="btn btn-primary w-50 py-2" type="submit" value="Создать смену">
-    </div>
-</form>
+    <form method="POST" action="/user/{{ worker.key }}/new_shift">
+        <div class="row justify-content-center">
+            <div class="col-6 mb-2 py-1">
+                <label for="vehicle">Выберите машину:</label>
+                <select name="vehicle" id="vehicle" class="form-select form-select-lg">
+                    {% for vehicle in vehicles %}
+                        <option value="{{ vehicle.id }}">{{ vehicle.plate }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-6 mb-2 py-1">
+                <label for="vehicle">Выберите cмену</label>
+                <select class="form-select form-select-lg" name="type" id="type">
+                    <option value="1 смена">1 смена</option>
+                    <option value="2 смена">2 смена</option>
+                </select>
+            </div>
+            <div class="col-6 mb-2 py-1">
+                <label for="odometer">Показания одометра:</label>
+                <input type="text" class="form-control InputPole" id="odometer" name="odometer">
+            </div>
+            <div class="col-6 mb-2 py-1">
+                <label for="fuel">Дизель:</label>
+                <input type="text" class="form-control InputPole" id="fuel" name="fuel">
+            </div>
+            <div class="col-6 mb-2 py-1">
+                <input class="btn btn-light w-100" type="submit" value="Создать смену">
+            </div>
+        </div>
+    </form>
+</div>
 {% endblock %}

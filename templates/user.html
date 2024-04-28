@@ -2,32 +2,32 @@
 
 {% block title %}Сотрудник{% endblock %}
 {% block body %}
-<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column justify-content-center">
+<div class="cover-container d-flex w-75 h-50 p-3 mx-auto flex-column justify-content-center">
     <h1 class="display-4">{{ worker.last_name }} {{ worker.first_name }} {{ worker.surname }}</h1>
     {% if shift %}
-        <div class="mb-3">
-            <table class="table table-Secondary table-striped">
-                <tr class="table table-Secondary table-striped">
-                        <td class="table table-Secondary table-striped">Смена</td>
-                        <td class="table table-Secondary table-striped">Начало</td>
-                        <td class="table table-Secondary table-striped">Одометр</td>
-                        <td class="table table-Secondary table-striped">Дизель</td>
-                        <td class="table table-Secondary table-striped">Машина</td>
+        <div class="mb-3 table-responsive">
+            <table class="table table-Light table-striped">
+                <tr class="table table-Light table-striped">
+                        <td class="table table-Light table-striped">Смена</td>
+                        <td class="table table-Light table-striped">Начало</td>
+                        <td class="table table-Light table-striped">Одометр</td>
+                        <td class="table table-Light table-striped">Дизель</td>
+                        <td class="table table-Light table-striped">Машина</td>
                 </tr>
-                    <tr class="table table-Secondary table-striped">
-                        <td class="table table-Secondary table-striped">{{ shift.type }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.date_started }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.odometer_start }}</td>
-                        <td class="table table-Secondary table-striped">{{ shift.diesel_start }}</td>
-                        <td class="table table-Secondary table-striped">{{ car.plate }}</td>
-                        <td class="table table-Secondary table-striped">
+                    <tr class="table table-Light table-striped">
+                        <td class="table table-Light table-striped">{{ shift.type }}</td>
+                        <td class="table table-Light table-striped">{{ shift.date_started }}</td>
+                        <td class="table table-Light table-striped">{{ shift.odometer_start }}</td>
+                        <td class="table table-Light table-striped">{{ shift.diesel_start }}</td>
+                        <td class="table table-Light table-striped">{{ car.plate }}</td>
+                        <td class="table table-Light table-striped">
                             <form method="POST" action="/download/{{ shift.id }}" id="downloadForm">
-                                <button class="btn btn-primary w-100 py-2" type="submit">↓</button>
+                                <button class="btn btn-success w-100 py-2" type="submit">↓</button>
                             </form>
                         </td>
-                        <td class="table table-Secondary table-striped">
+                        <td class="table table-Light table-striped">
                             <form method="GET" action="/close/{{ shift.id }}">
-                                <button class="btn btn-primary w-100 py-2" type="submit">❌</button>
+                                <button class="btn btn-danger w-100 py-2" type="submit">❌</button>
                             </form>
                         </td>
                     </tr>
@@ -37,9 +37,9 @@
         <div class="mb-3">
             <p>У вас нет открытых путевых листов</p>
         </div>
-        <div class="mb-3">
+        <div class="mb-3 h-100 d-flex justify-content-center">
             <form method="GET" action="/user/{{ worker.key }}/new_shift">
-                <button class="btn btn-primary w-50 py-2" type="submit">Открыть смену</button>
+                <button class="btn btn-light w-100 h-50" type="submit">Открыть смену</button>
             </form>
         </div>
 {% endif %}
